@@ -102,6 +102,7 @@ logger.debug("Current timestamp  = %i" % (timestamp))
 media = []
 
 def is_new(last_run_timestamp, media_timestamp):
+    logger.debug('last_run_timestamp = %s, media_timestamp = %s' %(timestamp_pp(last_run_timestamp), timestamp_pp(media_timestamp)))
     if media_timestamp > last_run_timestamp:
         return True
     else:
@@ -110,7 +111,7 @@ def is_new(last_run_timestamp, media_timestamp):
 a = soup.find_all('directory')
 for e in a:
     media_type = e['librarysectiontitle']
-    if is_new(int(e['addedat']), last_timestamp):
+    if is_new(last_timestamp, int(e['addedat'])):
         logger.debug("%s, %s, %s" % (e['librarysectiontitle'], e['parenttitle'], e['title']))
         if media_type == 'Music':
             media.append({
@@ -129,7 +130,7 @@ for e in a:
 
 a = soup.find_all('video')
 for e in a:
-    if is_new(int(e['addedat']), last_timestamp):
+    if is_new(last_timestamp, int(e['addedat'])):
         media.append({
             'type': 'Video',
             'title': e['title'],
