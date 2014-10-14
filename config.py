@@ -5,7 +5,7 @@ config = {}
 config['plexify'] = {
     'plex_api': {
         'protocol': 'http',
-        'host': '192.168.98.112:32400',
+        'host': '192.168.1.112:32400',
         'path': '/library/recentlyAdded'
     },
     'smtp': {
