@@ -140,7 +140,17 @@ for e in a:
         logger.debug("%s, %s, %s" % ('Video', e['title'], t))
 
 if media:
-    notify_email(config['smtp'], media)
+    # strip unicode characters
+    media_stripped = []
+    for m in media:
+        a = {}
+        for k, v in m.iteritems():
+            a.update({k: v.encode('ascii','ignore')})
+        media_stripped.append(a)
+
+    # send notify email
+    notify_email(config['smtp'], media_stripped)
+    
     logger.debug(media)
 
 f = open('cache.txt', 'w')
